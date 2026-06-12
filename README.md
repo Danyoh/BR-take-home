@@ -28,8 +28,10 @@ INSERT INTO TRANSACTIONS ( txn_id, account_id, action, txn_type, amount, created
 SELECT 
     txn_id, 
     account_id, 
-    action_txn_type, 
-    amount_created_at 
+    action,
+    txn_type, 
+    amount,
+    created_at 
 FROM TRANSACTIONS 
 ORDER BY created_at DESC;
 
@@ -52,11 +54,13 @@ ORDER BY account_id, txn_type
 SELECT 
     a.owner_name,
     a.account_id,
-    SUM(CASE WHEN t.action = 'DEPOSIT' THEN t.amount ELSE -t.amount END) AS cash_balance
+    a.initial_cash + COALESCE(SUM(CASE WHEN t.action = 'DEPOSIT' THEN t.amount
+                                        WHEN t.action = 'WITHDRAW' THEN -t.amount 
+                                        ELSE 0 END), 0) AS cash_balance
 FROM ACCOUNTS a
-JOIN TRANSACTIONS t ON t.account_id = a.account_id
-WHERE t.txn_type = 'CASH'
-GROUP BY a.owner_name, a.account_id
+LEFT JOIN TRANSACTIONS t ON t.account_id = a.account_id
+AND t.txn_type = 'CASH'
+GROUP BY a.owner_name, a.account_id, a.initial_cash
 ORDER BY cash_balance DESC
 FETCH FIRST 1 ROWS ONLY;
 
