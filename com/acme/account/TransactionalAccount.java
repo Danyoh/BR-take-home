@@ -52,13 +52,13 @@ public class TransactionalAccount implements Account {
 				System.out.println("Deposited: $" + amount);
 			}
 			case STOCK -> {
-				if (amount.stripTrailingZeros().scale() <= 0){
+				if (amount.stripTrailingZeros().scale() > 0){
 					System.out.println("Error: Stock units must be a discrete integer.");
 					return;
 				}
 				stockUnits = stockUnits.add(amount);
 				history.add(new TransactionRecord(TransactionAction.DEPOSIT, TransactionType.STOCK, amount));
-				System.out.println("Deposited: $" + amount + " unit(s) of " + Stock.ACME.ticker());
+				System.out.println("Deposited: " + amount.toBigInteger() + " unit(s) of " + Stock.ACME.ticker());
 			}
 			default -> System.out.println("Error: Unsupported transaction type: " + type);
 		}

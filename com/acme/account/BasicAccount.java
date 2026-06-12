@@ -36,7 +36,7 @@ public class BasicAccount implements Account{
     @Override
     public void withdraw(BigDecimal amount, TransactionType type) {
     	if (type != TransactionType.CASH) {
-    		System.out.println("Only cash deposits are supported.");
+    		System.out.println("Only cash withdrawals are supported.");
     	}
     	else if (amount == null || amount.signum() <= 0) {
     		System.out.println("Withdrawal amount must be positive.");
