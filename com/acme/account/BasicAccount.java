@@ -56,6 +56,18 @@ public class BasicAccount implements Account{
         return this.balance; 
     }
 
+    // Get current balance
+    @Override
+    public BigDecimal getCashBalance() {
+        return this.balance; 
+    }
+
+    // Get current balance
+    @Override
+    public BigDecimal getStockBalance() {
+        return BigDecimal.ZERO; 
+    }
+
 	@Override
 	// Print Transaction History
 	public String getHistory() {

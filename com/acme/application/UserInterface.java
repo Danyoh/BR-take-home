@@ -1,11 +1,12 @@
 package com.acme.application;
 
 import java.util.Scanner;
-import com.acme.account.BasicAccount;
 import com.acme.account.TransactionType;
 import java.math.BigDecimal;
 import com.acme.account.Account;
 import com.acme.account.TransactionalAccount;
+import java.math.RoundingMode;
+import java.util.InputMismatchException;
 
 public class UserInterface {
 	
@@ -28,51 +29,60 @@ public class UserInterface {
             System.out.println("6. Get History");
             System.out.println("7. Exit");
             System.out.print("Choose an option: ");
-            int choice = scanner.nextInt();
 
-            switch (choice) {
-                case 1:
-                    System.out.print("Cash - Enter amount to deposit: ");
-                    depositAmount = BigDecimal.valueOf(scanner.nextDouble());
-                    account.deposit(depositAmount, TransactionType.CASH);
-                    break;
+            //If put characters it will cause error
 
-                case 2:
-                    System.out.print("Cash - Enter amount to withdraw: ");
-                    withdrawAmount = BigDecimal.valueOf(scanner.nextDouble());
-                    account.withdraw(withdrawAmount, TransactionType.CASH);
-                    break;
-                    
-                case 3:
-                    System.out.print("Stock - Enter amount to deposit: ");
-                    depositAmount = BigDecimal.valueOf(scanner.nextDouble());
-                    account.deposit(depositAmount, TransactionType.STOCK);
-                    break;
+            try {
+                int choice = scanner.nextInt();
 
-                case 4:
-                    System.out.print("Stock - Enter amount to withdraw: ");
-                    withdrawAmount = BigDecimal.valueOf(scanner.nextDouble());
-                    account.withdraw(withdrawAmount, TransactionType.STOCK);
-                    break;
+                switch (choice) {
+                    case 1:
+                        System.out.print("Cash - Enter amount to deposit: ");
+                        depositAmount = BigDecimal.valueOf(scanner.nextDouble());
+                        account.deposit(depositAmount, TransactionType.CASH);
+                        break;
 
-                case 5:
-                    System.out.print("Cash Balance: $" + account.getCashBalance());
-                    System.out.print("Stock Balance: $" + account.getStockBalance());
-                    System.out.print("Total Balance: $" + account.getBalance());
-                    break;
-                    
-                case 6:
-                    System.out.print("Transaction History: \n" + account.getHistory());
-                    break;
+                    case 2:
+                        System.out.print("Cash - Enter amount to withdraw: ");
+                        withdrawAmount = BigDecimal.valueOf(scanner.nextDouble());
+                        account.withdraw(withdrawAmount, TransactionType.CASH);
+                        break;
+                        
+                    case 3:
+                        System.out.print("Stock - Enter amount to deposit: ");
+                        depositAmount = new BigDecimal(scanner.nextInt());
+                        account.deposit(depositAmount, TransactionType.STOCK);
+                        break;
 
-                case 7:
-                    System.out.println("Exiting the program...");
-                    scanner.close();
-                    return;
+                    case 4:
+                        System.out.print("Stock - Enter amount to withdraw: ");
+                        withdrawAmount = new BigDecimal(scanner.nextInt());
+                        account.withdraw(withdrawAmount, TransactionType.STOCK);
+                        break;
 
-                default:
-                    System.out.println("Invalid choice! Please choose a valid option.");
+                    case 5:
+                        System.out.println("Cash Balance: $" + account.getCashBalance().setScale(2, RoundingMode.HALF_UP));
+                        System.out.println("Stock Balance: $" + account.getStockBalance().setScale(2, RoundingMode.HALF_UP));
+                        System.out.println("Total Balance: $" + account.getBalance().setScale(2, RoundingMode.HALF_UP));
+                        break;
+                        
+                    case 6:
+                        System.out.print("Transaction History: \n" + account.getHistory());
+                        break;
+
+                    case 7:
+                        System.out.println("Exiting the program...");
+                        scanner.close();
+                        return;
+
+                    default:
+                        System.out.println("Invalid choice! Please choose a valid option.");
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Error: Invalid input. Please only enter options 1-7.");
+                scanner.nextLine();
             }
         }
+        
     }
 }
