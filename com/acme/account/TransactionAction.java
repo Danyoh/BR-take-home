@@ -5,5 +5,6 @@ package com.acme.account;
 
 public enum TransactionAction {
     DEPOSIT,
-    WITHDRAW
+    WITHDRAW,
+    OPENING
 }
