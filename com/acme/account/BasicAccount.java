@@ -23,7 +23,7 @@ public class BasicAccount implements Account{
     	if (type != TransactionType.CASH) {
     		System.out.println("Only cash deposits are supported.");
     	}
-    	else if (amount != null && amount.signum() <= 0) {
+    	else if (amount == null || amount.signum() <= 0) {
     		System.out.println("Deposit amount must be positive.");
     	}
     	else {
@@ -38,7 +38,7 @@ public class BasicAccount implements Account{
     	if (type != TransactionType.CASH) {
     		System.out.println("Only cash deposits are supported.");
     	}
-    	else if (amount != null && amount.signum() >= 0) {
+    	else if (amount == null || amount.signum() <= 0) {
     		System.out.println("Withdrawal amount must be positive.");
     	}
     	else if (amount.compareTo(balance) > 0) {
