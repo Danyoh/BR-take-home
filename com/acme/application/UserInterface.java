@@ -56,7 +56,7 @@ public class UserInterface {
                     break;
 
                 case 5:
-                    System.out.print("Current Balance: $: " + account.getBalance());
+                    System.out.print("Current Balance: $" + account.getBalance());
                     break;
                     
                 case 6:

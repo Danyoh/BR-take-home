@@ -82,18 +82,21 @@ public class TransactionalAccount implements Account {
 					System.out.println("Error: Insufficient cash balance.");
 					return;
 				}
-				cashBalance = cashBalance.add(amount);
-				history.add(new TransactionRecord(TransactionAction.DEPOSIT, TransactionType.CASH, amount));
+				cashBalance = cashBalance.subtract(amount);
+				history.add(new TransactionRecord(TransactionAction.WITHDRAW, TransactionType.CASH, amount));
 				System.out.println("Withdrawn: $" + amount);
 			}
 			case STOCK -> {
-				if (amount.stripTrailingZeros().scale() <= 0){
+				if (amount.stripTrailingZeros().scale() > 0){
 					System.out.println("Error: Stock units must be a discrete integer.");
 					return;
 				}
-				stockUnits = stockUnits.add(amount);
-				history.add(new TransactionRecord(TransactionAction.DEPOSIT, TransactionType.STOCK, amount));
-				System.out.println("Withdrawn: $" + amount + " unit(s) of " + Stock.ACME.ticker());
+				if (amount.compareTo(stockUnits) > 0) {
+					System.out.println("Error: Insufficient stock units.");
+				}
+				stockUnits = stockUnits.subtract(amount);
+				history.add(new TransactionRecord(TransactionAction.WITHDRAW, TransactionType.STOCK, amount));
+				System.out.println("Withdrawn: $" + amount.toBigInteger() + " unit(s) of " + Stock.ACME.ticker());
 			}
 			default -> System.out.println("Error: Unsupported transaction type: " + type);
 		}
@@ -102,7 +105,7 @@ public class TransactionalAccount implements Account {
 	@Override
 	public BigDecimal getBalance() {
 		// TODO Auto-generated method stub
-		return 		stockUnits.multiply(Stock.ACME.price());
+		return 	cashBalance.add(stockUnits.multiply(Stock.ACME.price()));
 	}
 
 	@Override
