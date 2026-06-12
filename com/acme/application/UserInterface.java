@@ -4,6 +4,8 @@ import java.util.Scanner;
 import com.acme.account.BasicAccount;
 import com.acme.account.TransactionType;
 import java.math.BigDecimal;
+import com.acme.account.Account;
+import com.acme.account.TransactionalAccount;
 
 public class UserInterface {
 	
@@ -14,10 +16,10 @@ public class UserInterface {
         BigDecimal withdrawAmount;
 
         // Create a new account with an initial balance of $1000
-        BasicAccount account = new BasicAccount(new BigDecimal("1000"));
+        Account account = new TransactionalAccount(new BigDecimal("1000"));
 
         while (true) {
-            System.out.println("\n-- Acme Financial Menu --");
+            System.out.println("\n\n-- Acme Financial Menu --");
             System.out.println("1. Cash - Deposit");
             System.out.println("2. Cash - Withdraw");
             System.out.println("3. Stock - Deposit");

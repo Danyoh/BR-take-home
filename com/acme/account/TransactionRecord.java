@@ -30,7 +30,7 @@ public record TransactionRecord(
             case STOCK -> amount.toBigInteger() + " unit(s) of " + Stock.ACME.ticker();
             default -> amount.toPlainString() + " (" + type + ")";
         };
-        return "[" + timestamp.format(dateTimeFormatted) + "]" + action + "  " + type + " " + quantity;
+        return "[" + timestamp.format(dateTimeFormatted) + "] " + action + " " + type + " " + quantity;
     }
 }
 
