@@ -1,21 +1,23 @@
 package com.acme.account;
 
+import java.math.BigDecimal;
+
 public class TransactionalAccount implements Account {
 
 	@Override
-	public void deposit(double amount, TransactionType type) {
+	public void deposit(BigDecimal amount, TransactionType type) {
 		// TODO Auto-generated method stub
 	}
 
 	@Override
-	public void withdraw(double amount, TransactionType type) {
+	public void withdraw(BigDecimal amount, TransactionType type) {
 		// TODO Auto-generated method stub
 	}
 
 	@Override
-	public double getBalance() {
+	public BigDecimal getBalance() {
 		// TODO Auto-generated method stub
-		return 0;
+		return BigDecimal.ZERO;
 	}
 
 	@Override
