@@ -32,31 +32,39 @@ public class UserInterface {
 
             //If put characters it will cause error
 
-            try {
-                int choice = scanner.nextInt();
+            int choice;
 
+            try {
+                choice = scanner.nextInt();
+            } catch (InputMismatchException e) {
+                System.out.println("Error: Invalid menu choice. Please enter a number from 1-7.");
+                scanner.nextLine();
+                continue;
+            }
+
+            try {
                 switch (choice) {
                     case 1:
                         System.out.print("Cash - Enter amount to deposit: ");
-                        depositAmount = BigDecimal.valueOf(scanner.nextDouble());
+                        depositAmount = new BigDecimal(scanner.next());
                         account.deposit(depositAmount, TransactionType.CASH);
                         break;
 
                     case 2:
                         System.out.print("Cash - Enter amount to withdraw: ");
-                        withdrawAmount = BigDecimal.valueOf(scanner.nextDouble());
+                        withdrawAmount = new BigDecimal(scanner.next());
                         account.withdraw(withdrawAmount, TransactionType.CASH);
                         break;
                         
                     case 3:
                         System.out.print("Stock - Enter amount to deposit: ");
-                        depositAmount = new BigDecimal(scanner.nextInt());
+                        depositAmount = new BigDecimal(scanner.next());
                         account.deposit(depositAmount, TransactionType.STOCK);
                         break;
 
                     case 4:
                         System.out.print("Stock - Enter amount to withdraw: ");
-                        withdrawAmount = new BigDecimal(scanner.nextInt());
+                        withdrawAmount = new BigDecimal(scanner.next());
                         account.withdraw(withdrawAmount, TransactionType.STOCK);
                         break;
 
@@ -78,9 +86,8 @@ public class UserInterface {
                     default:
                         System.out.println("Invalid choice! Please choose a valid option.");
                 }
-            } catch (InputMismatchException e) {
-                System.out.println("Error: Invalid input. Please only enter options 1-7.");
-                scanner.nextLine();
+            } catch (NumberFormatException e) {
+                System.out.println("Error: Invalid amount. Please only enter numeric values.");
             }
         }
         
