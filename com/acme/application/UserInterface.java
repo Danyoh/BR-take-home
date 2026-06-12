@@ -56,11 +56,13 @@ public class UserInterface {
                     break;
 
                 case 5:
-                    System.out.print("Current Balance: $" + account.getBalance());
+                    System.out.print("Cash Balance: $" + account.getCashBalance());
+                    System.out.print("Stock Balance: $" + account.getStockBalance());
+                    System.out.print("Total Balance: $" + account.getBalance());
                     break;
                     
                 case 6:
-                    System.out.print("Transaction History: \n: " + account.getHistory());
+                    System.out.print("Transaction History: \n" + account.getHistory());
                     break;
 
                 case 7:

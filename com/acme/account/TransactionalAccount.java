@@ -93,10 +93,11 @@ public class TransactionalAccount implements Account {
 				}
 				if (amount.compareTo(stockUnits) > 0) {
 					System.out.println("Error: Insufficient stock units.");
+					return;
 				}
 				stockUnits = stockUnits.subtract(amount);
 				history.add(new TransactionRecord(TransactionAction.WITHDRAW, TransactionType.STOCK, amount));
-				System.out.println("Withdrawn: $" + amount.toBigInteger() + " unit(s) of " + Stock.ACME.ticker());
+				System.out.println("Withdrawn: " + amount.toBigInteger() + " unit(s) of " + Stock.ACME.ticker());
 			}
 			default -> System.out.println("Error: Unsupported transaction type: " + type);
 		}
@@ -105,7 +106,21 @@ public class TransactionalAccount implements Account {
 	@Override
 	public BigDecimal getBalance() {
 		// TODO Auto-generated method stub
-		return 	cashBalance.add(stockUnits.multiply(Stock.ACME.price()));
+		return 	cashBalance.add(getStockBalance());
+	}
+
+	
+	@Override
+	public BigDecimal getCashBalance() {
+		// TODO Auto-generated method stub
+		return cashBalance;
+	}
+
+	
+	@Override
+	public BigDecimal getStockBalance() {
+		// TODO Auto-generated method stub
+		return 	stockUnits.multiply(Stock.ACME.price());
 	}
 
 	@Override

@@ -12,9 +12,16 @@ public interface Account {
     //Withdraw money from the account
     public void withdraw(BigDecimal amount, TransactionType type);
 
-    //Get current account balance
+    //Get current total balance
     public BigDecimal getBalance();
+
+    //Get current cash balance
+    public BigDecimal getCashBalance();
+
+     //Get current stock balance
+    public BigDecimal getStockBalance();
     
     //List transaction history
     public String getHistory();
+
 }
